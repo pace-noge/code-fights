@@ -9,6 +9,8 @@ def search_nested(mylist, val):
 def spamClusterization(requests, IDs, threshold):
     list_of_sets = []
     result = []
+    if len(requests) <= 1:
+        return []
     for req in requests:
         set_of_words = set([i.strip(",.?!") for i in req.lower().split()])
         list_of_sets.append(set_of_words)
@@ -52,12 +54,7 @@ def spamClusterization(requests, IDs, threshold):
 
 
 if __name__ == "__main__":
-    requests = ["I need a new window.",
-            "I really, really want to replace my window!",
-            "Replace my window.",
-            "I want a new window.",
-            "I want a new carpet, I want a new carpet, I want a new carpet.",
-            "Replace my carpet"]
-    IDs = [374, 2845, 83, 1848, 1837, 1500]
+    requests = ["ab","cd","ef"]
+    IDs = [1,2,3]
     threshold = 0.5
     spamClusterization(requests, IDs, threshold)

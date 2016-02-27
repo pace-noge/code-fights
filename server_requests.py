@@ -2,17 +2,22 @@ def processingRequests(servers, requests):
     hasil = []
     x = []
     result = []
+    y = []
     for i in range(1, servers + 1):
         process_data = range(1, (2*i)+1)
+        y.append(process_data)
         hasil.append([x for x in requests if x in process_data])
     #for x in range(len(hasil)):
     for i in range(len(hasil)):
-        if len(hasil[i]) > i:
-            result.append(hasil[i][i])
+        print max(y[i])
+        print i
+        if requests[i] > i and requests[i] <= max(y[i]):
+            result.append(requests[i])
+        print result
     print result
     return len(result)
 
 
 
 if __name__ == "__main__":
-    print processingRequests(3, [1,2,3,4,5,6,7,8,9,10])
+    print processingRequests(10, [1, 2, 3, 5, 7, 11, 13, 15, 19, 22, 27, 30, 2000])

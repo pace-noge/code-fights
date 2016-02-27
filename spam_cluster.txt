@@ -1,0 +1,57 @@
+Thumbtack tries to identify spam coming from multiple user accounts by comparing job request descriptions and identifying clusters that have high similarity. Their data analysis engineers are testing out a new clusterization algorithm that uses the Jaccard index. As a prospective team member, you've been asked to implement this algorithm.
+
+The Jaccard index of two sets is calculated as the size of their intersection divided by the size of their union, i.e. for two sets A and B their Jaccard index equals |A ∩ B| / |A ∪ B|.
+
+You are given a list of requests and IDs of the users who submitted them. Implement the following algorithm to identify possible spammers:
+
+first, split each request into a set of words and convert them to lowercase. We formally define a word as a substring consisting of English letters, such that characters to the left of the leftmost letter and to the right of the rightmost letter are not letters;
+next, calculate the Jaccard index of each pair of sets;
+divide the sets into clusters such two sets A and B belong to the same cluster, if their Jaccard index is not less than the given threshold (meaning they are too similar);
+for each cluster that has more than one element, return the list of their author IDs in ascending order.
+Example
+
+For
+
+requests = ["I need a new window.",
+            "I really, really want to replace my window!",
+            "Replace my window.",
+            "I want a new window.",
+            "I want a new carpet, I want a new carpet, I want a new carpet.",
+            "Replace my carpet"]
+
+IDs = [374, 2845, 83, 1848, 1837, 1500],
+threshold = 0.5
+the answer is spamClusterization(requests, IDs, threshold) = [[83, 1500], [374, 1837, 1848]].
+
+The sets of words obtained after the first step are:
+
+{"i", "need", "a", "new", "window"} - 5 elements;
+{"i", "really", "want", "to", "replace", "my", "window"} - 7 elements;
+{"replace", "my", "window"} - 3 elements;
+{"i", "want", "a", "new", "window"} - 5 elements;
+{"i", "want", "a", "new", "carpet"} - 5 elements (note that a set consists only of unique elements);
+{"replace", "my", "carpet"} - 3 elements.
+Here's a table of Jaccard indices for each pair of request (there are 6 requests in total):
+
+1   2   3   4   5   6
+1   -   2/10 = 1/5  1/7 4/6 = 2/3   3/7 0/8 = 0
+2   1/5 -   3/7 3/9 = 1/3   2/10 = 1/5  2/8 = 1/4
+3   1/7 3/7 -   1/7 0/8 = 0 2/4 = 1/2
+4   4/6 3/9 1/7 -   4/6 = 2/3   0/8 = 0
+5   3/7 1/5 0   2/3 -   1/7
+6   0   1/4 1/2 0   1/7 -
+Since threshold = 0.5, there are two clusters with more than one element. The first one contains the third and the sixth requests, and the second one contains requests number one, four and five. After sorting their author IDs, we arrive at the answer.
+
+[input] array.string requests
+
+A non-empty list of requests. Each request is a non-empty string consisting of English letters, punctuation marks and whitespace characters.
+[input] array.integer IDs
+
+Array of unique elements of the same size as requests.
+[input] float threshold
+
+It is guaranteed that  0 ≤ threshold ≤ 1.
+[output] array.array.integer
+
+Each element of the output should contain sorted IDs of users whose requests ended up in the same cluster. Output array elements should be sorted by the smallest IDs they contain.
+CODE
