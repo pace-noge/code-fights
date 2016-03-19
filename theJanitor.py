@@ -15,13 +15,9 @@ A word consisting of only lowercase Latin letters.
 An array of length 26. The first element is the minimum width of the mop to erase letter 'a', the second - letter 'b' etc.
 """
 def theJanitor(word):
-    import string
-    s = string.ascii_lowercase
-    z = [0 for i in s]
-    y = [len(word)-word.index(i)-word[::-1].index(i) for i in word ]
-    for x in s:
-        if x in word:
-            z[s.index(x)] = len(word)-word.index(x)-word[::-1].index(x)
-    #return [len(word)-word.index(i)-word[::-1].index(i) for i in word ]
-    return z
+    z = [0]*26
+    for i in set(word):
+        z[ord(i)-97] = len(word)-word.index(i)-word[::-1].index(i)
+        
+    return z 
         
